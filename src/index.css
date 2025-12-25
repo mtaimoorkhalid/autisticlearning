@@ -1,68 +1,98 @@
+/* src/index.css */
+
+/* 1. THE BRANDING VARIABLES (The "Calm" Vibe) */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Colors */
+  --bg-color: #F9F8F6;       /* Warm off-white (Paper-like) */
+  --text-main: #2D3339;      /* Soft charcoal (not harsh black) */
+  --text-light: #525E65;     /* Muted text for subheaders */
+  --accent-primary: #4A7C85; /* Calm Teal */
+  --accent-soft: #DCEBEB;    /* Very soft teal for backgrounds */
+  --white: #FFFFFF;
+  
+  /* Typography */
+  --font-base: 18px;         /* Slightly larger for readability */
+  --font-header: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  
+  /* Spacing & Shapes */
+  --radius-card: 12px;       /* Soft rounded corners */
+  --shadow-soft: 0 4px 20px rgba(0,0,0,0.05); /* Gentle lift */
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/* 2. COMFORT MODE OVERRIDES (The Accessibility Feature) */
+/* When this class is added to body, everything gets clearer */
+body.comfort-mode {
+  --bg-color: #FFFFFF;       /* Pure white for high contrast */
+  --text-main: #000000;      /* Pure black */
+  --text-light: #222222;     /* Darker grey */
+  --accent-primary: #005566; /* Darker teal for contrast */
+  --accent-soft: #EEEEEE;    /* Grey instead of teal bg */
+  --font-base: 22px;         /* 20% larger text */
 }
-a:hover {
-  color: #535bf2;
+
+/* 3. GLOBAL RESET & BASE STYLES */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: var(--font-header);
+  font-size: var(--font-base);
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth toggle */
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* 4. UTILITY CLASSES (We will use these to build cards) */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-button {
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  border: none;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.btn-primary {
+  background-color: var(--accent-primary);
+  color: var(--white);
 }
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--white);
+  color: var(--accent-primary);
+  border: 1px solid var(--accent-primary);
+}
+
+.card {
+  background: var(--white);
+  padding: 2rem;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+}
+
+h1, h2, h3 {
+  color: var(--text-main);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
