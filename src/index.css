@@ -1,33 +1,60 @@
 /* src/index.css */
 
-/* 1. THE BRANDING VARIABLES (The "Calm" Vibe) */
+/* 1. THE "SENSORY SAFE" PALETTE (Sage & Sand) */
 :root {
-  /* Colors */
-  --bg-color: #F9F8F6;       /* Warm off-white (Paper-like) */
-  --text-main: #2D3339;      /* Soft charcoal (not harsh black) */
-  --text-light: #525E65;     /* Muted text for subheaders */
-  --accent-primary: #4A7C85; /* Calm Teal */
-  --accent-soft: #DCEBEB;    /* Very soft teal for backgrounds */
+  /* BACKGROUND: "Alabaster" 
+     Warmer than white, reduces screen glare significantly. */
+  --bg-color: #FAF9F6; 
+
+  /* TEXT: "Deep Slate" 
+     High contrast enough to read, but softer than black. */
+  --text-main: #334155;      
+  
+  /* SUBTEXT: "Stone" */
+  --text-light: #64748B;     
+
+  /* ACCENT: "Restorative Sage" 
+     Green is the easiest color for the human eye to process. 
+     This shade is muted to prevent overstimulation. */
+  --accent-primary: #6B9080; 
+
+  /* SECONDARY ACCENT: "Mint Cream" 
+     Used for card backgrounds. Very subtle. */
+  --accent-soft: #EAF4F4;    
+
+  /* UTILITY */
   --white: #FFFFFF;
   
+  /* Borders & Shadows (Soft) */
+  --border-width: 0px;
+  --border-color: transparent;
+  /* Green-tinted shadow for organic feel */
+  --shadow-soft: 0 4px 20px rgba(107, 144, 128, 0.15); 
+
   /* Typography */
-  --font-base: 18px;         /* Slightly larger for readability */
-  --font-header: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  
-  /* Spacing & Shapes */
-  --radius-card: 12px;       /* Soft rounded corners */
-  --shadow-soft: 0 4px 20px rgba(0,0,0,0.05); /* Gentle lift */
+  --font-base: 18px;
+  --line-height: 1.6;
+  --font-weight-p: 400; /* Normal weight */
 }
 
-/* 2. COMFORT MODE OVERRIDES (The Accessibility Feature) */
-/* When this class is added to body, everything gets clearer */
+/* 2. COMFORT MODE OVERRIDES (The "Clear" Version) */
 body.comfort-mode {
-  --bg-color: #FFFFFF;       /* Pure white for high contrast */
+  /* High Contrast Colors */
+  --bg-color: #FFFFFF;       /* Pure white */
   --text-main: #000000;      /* Pure black */
-  --text-light: #222222;     /* Darker grey */
-  --accent-primary: #005566; /* Darker teal for contrast */
-  --accent-soft: #EEEEEE;    /* Grey instead of teal bg */
-  --font-base: 22px;         /* 20% larger text */
+  --text-light: #000000;     /* No gray text allowed */
+  --accent-primary: #004455; /* Darker teal/green for contrast */
+  --accent-soft: #F0F0F0;    /* Light grey instead of color */
+  
+  /* Visual Clarity (No blurry shadows, hard lines) */
+  --shadow-soft: none;       /* Remove shadows */
+  --border-width: 2px;       /* Add borders */
+  --border-color: #000000;   /* Black borders */
+
+  /* Readability */
+  --font-base: 19px;         /* Only slight total size increase */
+  --line-height: 1.9;        /* Much more space between lines */
+  --font-weight-p: 500;      /* Make text slightly bolder */
 }
 
 /* 3. GLOBAL RESET & BASE STYLES */
@@ -40,13 +67,28 @@ body.comfort-mode {
 body {
   background-color: var(--bg-color);
   color: var(--text-main);
-  font-family: var(--font-header);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: var(--font-base);
-  line-height: 1.6;
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth toggle */
+  line-height: var(--line-height);
+  transition: all 0.3s ease;
 }
 
-/* 4. UTILITY CLASSES (We will use these to build cards) */
+/* Specific text targeting for Comfort Mode */
+body.comfort-mode p {
+  font-size: 1.15rem; /* Make paragraphs clearly bigger */
+  letter-spacing: 0.02em; /* Spread letters out slightly */
+  font-weight: var(--font-weight-p);
+}
+
+body.comfort-mode h1, 
+body.comfort-mode h2, 
+body.comfort-mode h3 {
+  text-decoration: underline; /* Underline headers for structure */
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--accent-soft);
+}
+
+/* 4. COMPONENT STYLES */
 .container {
   max-width: 1100px;
   margin: 0 auto;
@@ -59,19 +101,21 @@ body {
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
-  transition: all 0.2s ease;
   cursor: pointer;
   border: none;
+  transition: all 0.2s ease;
+}
+
+/* Comfort Mode Button Fix */
+body.comfort-mode .btn {
+  border: 2px solid #000 !important; /* Force borders on buttons */
+  box-shadow: 4px 4px 0px #000; /* Retro "tactile" shadow */
+  transform: translate(-2px, -2px);
 }
 
 .btn-primary {
   background-color: var(--accent-primary);
   color: var(--white);
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
 }
 
 .btn-secondary {
@@ -83,36 +127,22 @@ body {
 .card {
   background: var(--white);
   padding: 2rem;
-  border-radius: var(--radius-card);
+  border-radius: 12px;
+  
+  /* Dynamic Shadow/Border */
   box-shadow: var(--shadow-soft);
+  border: var(--border-width) solid var(--border-color);
 }
 
-h1, h2, h3 {
-  color: var(--text-main);
-  margin-bottom: 1rem;
-  line-height: 1.2;
-}
-
+h1, h2, h3 { margin-bottom: 1rem; line-height: 1.2; }
 h1 { font-size: 2.5rem; }
 h2 { font-size: 2rem; }
 h3 { font-size: 1.5rem; }
 
-
-
-/* --- APPEND TO BOTTOM OF SRC/INDEX.CSS --- */
-
-/* Layout Helpers */
-.section {
-  padding: 5rem 0; /* Breathing room */
-}
-
-.section-grey {
-  background-color: #EFEFEF; /* Slight contrast for middle sections */
-}
-
-.text-center {
-  text-align: center;
-}
+/* 5. LAYOUT HELPERS */
+.section { padding: 5rem 0; }
+.section-grey { background-color: var(--accent-soft); } /* Uses variable now */
+.text-center { text-align: center; }
 
 .grid-3 {
   display: grid;
@@ -129,84 +159,53 @@ h3 { font-size: 1.5rem; }
   margin-top: 3rem;
 }
 
-/* For mobile, stack the grid-2 */
 @media (max-width: 768px) {
   .grid-2 { grid-template-columns: 1fr; gap: 2rem; }
   .section { padding: 3rem 0; }
 }
 
-.step-card {
-  text-align: left;
-}
-
+/* Timeline & Steps */
+.step-card { text-align: left; }
 .step-number {
   font-size: 3rem;
-  color: var(--accent-soft); /* Very light teal number behind text */
+  color: var(--accent-primary);
+  opacity: 0.3;
   font-weight: bold;
   line-height: 1;
   margin-bottom: 0.5rem;
 }
 
+body.comfort-mode .step-number { opacity: 1; color: #000; } /* High contrast numbers */
 
-
-
-/* --- APPEND TO BOTTOM OF SRC/INDEX.CSS --- */
-
-/* Timeline Styles */
-.timeline {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-/* The vertical line */
+/* Timeline fixes for Comfort Mode */
+.timeline { position: relative; max-width: 800px; margin: 0 auto; }
 .timeline::before {
-  content: '';
-  position: absolute;
-  left: 20px;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: var(--accent-soft);
-  border-radius: 2px;
+  content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 4px;
+  background: var(--accent-soft); border-radius: 2px;
 }
+body.comfort-mode .timeline::before { background: #000; } /* Black line */
 
-.timeline-item {
-  position: relative;
-  padding-left: 60px;
-  margin-bottom: 2.5rem;
-}
-
-/* The dot on the line */
+.timeline-item { position: relative; padding-left: 60px; margin-bottom: 2.5rem; }
 .timeline-item::before {
-  content: '';
-  position: absolute;
-  left: 10px;
-  top: 5px;
-  width: 24px;
-  height: 24px;
-  background: var(--accent-primary);
-  border-radius: 50%;
-  border: 4px solid var(--white);
+  content: ''; position: absolute; left: 10px; top: 5px; width: 24px; height: 24px;
+  background: var(--accent-primary); border-radius: 50%; border: 4px solid var(--white);
   box-shadow: 0 0 0 2px var(--accent-soft);
+}
+body.comfort-mode .timeline-item::before {
+  background: #000; border-color: #fff; box-shadow: 0 0 0 2px #000;
 }
 
 .tile-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem; margin-top: 2rem;
 }
-
 .tile {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid #eee;
+  background: white; padding: 1.5rem; border-radius: 8px; border: 1px solid #eee;
   transition: transform 0.2s ease;
 }
+/* Force border in comfort mode for tiles */
+body.comfort-mode .tile { border: 2px solid #000; }
 
 .tile:hover {
-  border-color: var(--accent-primary);
-  transform: translateY(-2px);
+  border-color: var(--accent-primary); transform: translateY(-2px);
 }
