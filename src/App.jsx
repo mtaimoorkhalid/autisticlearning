@@ -1,8 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
 import { ThemeProvider } from './context/ThemeContext';
 
-// Import the pages (Make sure these files exist in /pages!)
+// Components
+import Navbar from './components/Navbar';
+
+// Pages
 import Home from './pages/Home';
 import Families from './pages/Families';
 import Educators from './pages/Educators';
@@ -15,26 +17,31 @@ import Contact from './pages/Contact';
 function App() {
   return (
     <ThemeProvider>
-      <Navbar />
-      <div className="main-content" style={{ minHeight: '80vh', paddingBottom: '4rem' }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/families" element={<Families />} />
-          <Route path="/educators" element={<Educators />} />
-          <Route path="/method" element={<Method />} />
-          <Route path="/tools" element={<Tools />} />
-          <Route path="/safeguarding" element={<Safeguarding />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
+      <div className="app-wrapper">
+        <Navbar />
+        
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/families" element={<Families />} />
+            <Route path="/educators" element={<Educators />} />
+            <Route path="/method" element={<Method />} />
+            <Route path="/tools" element={<Tools />} />
+            <Route path="/safeguarding" element={<Safeguarding />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </main>
+
+        <footer className="footer">
+          <div className="container">
+            <p>© {new Date().getFullYear()} Autistic Learning. All rights reserved.</p>
+            <p style={{ fontSize: '0.8rem', opacity: 0.7, marginTop: '0.5rem' }}>
+              We do not provide medical advice.
+            </p>
+          </div>
+        </footer>
       </div>
-      
-      {/* Simple Footer */}
-      <footer style={{ background: 'var(--white)', padding: '2rem 0', textAlign: 'center', borderTop: '1px solid #eee' }}>
-        <p style={{ color: 'var(--text-light)', fontSize: '0.9rem' }}>
-          Privacy-first. Consent-based. Non-clinical support.
-        </p>
-      </footer>
     </ThemeProvider>
   );
 }
