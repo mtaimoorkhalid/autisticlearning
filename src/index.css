@@ -1,211 +1,506 @@
-/* src/index.css */
-
-/* 1. THE "SENSORY SAFE" PALETTE (Sage & Sand) */
+/* =========================================
+   1. DESIGN TOKENS & VARIABLES
+   ========================================= */
 :root {
-  /* BACKGROUND: "Alabaster" 
-     Warmer than white, reduces screen glare significantly. */
-  --bg-color: #FAF9F6; 
-
-  /* TEXT: "Deep Slate" 
-     High contrast enough to read, but softer than black. */
-  --text-main: #334155;      
+  /* --- COLOR PALETTE: Swedish Learning --- */
+  /* Backgrounds */
+  --bg-surface: #f0f4f8;   /* The main page background (Soft Cloud) */
+  --bg-card: #FFFFFF;      /* Pure white for content depth */
   
-  /* SUBTEXT: "Stone" */
-  --text-light: #64748B;     
-
-  /* ACCENT: "Restorative Sage" 
-     Green is the easiest color for the human eye to process. 
-     This shade is muted to prevent overstimulation. */
-  --accent-primary: #6B9080; 
-
-  /* SECONDARY ACCENT: "Mint Cream" 
-     Used for card backgrounds. Very subtle. */
-  --accent-soft: #EAF4F4;    
-
-  /* UTILITY */
-  --white: #FFFFFF;
-  
-  /* Borders & Shadows (Soft) */
-  --border-width: 0px;
-  --border-color: transparent;
-  /* Green-tinted shadow for organic feel */
-  --shadow-soft: 0 4px 20px rgba(107, 144, 128, 0.15); 
-
   /* Typography */
-  --font-base: 18px;
-  --line-height: 1.6;
-  --font-weight-p: 400; /* Normal weight */
-}
-
-/* 2. COMFORT MODE OVERRIDES (The "Clear" Version) */
-body.comfort-mode {
-  /* High Contrast Colors */
-  --bg-color: #FFFFFF;       /* Pure white */
-  --text-main: #000000;      /* Pure black */
-  --text-light: #000000;     /* No gray text allowed */
-  --accent-primary: #004455; /* Darker teal/green for contrast */
-  --accent-soft: #F0F0F0;    /* Light grey instead of color */
+  --text-primary: #2c3e50; /* Dark blue-grey, softer than black */
+  --text-secondary: #64748b; /* Mid-grey for subtitles */
   
-  /* Visual Clarity (No blurry shadows, hard lines) */
-  --shadow-soft: none;       /* Remove shadows */
-  --border-width: 2px;       /* Add borders */
-  --border-color: #000000;   /* Black borders */
+  /* Accents */
+  --accent-blue: #005B99;    /* Primary Action/Brand Color */
+  --accent-blue-dark: #004a7d; /* For hover states */
+  --accent-yellow: #FFD700;  /* Highlights & Energy */
+  --accent-pink: #d63384;    /* Special/Love/Mama emphasis */
+  --accent-pink-light: #fff0f6;
+  
+  /* Utility & Feedback */
+  --border-subtle: #e2e8f0;
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-md: 0 6px 12px rgba(0,91,153,0.08), 0 2px 4px rgba(0,0,0,0.05);
+  
+  /* Dynamic Hovers */
+  --shadow-hover-blue: 0 15px 30px rgba(0, 91, 153, 0.15), 0 5px 10px rgba(0, 91, 153, 0.05);
+  --shadow-hover-pink: 0 15px 30px rgba(214, 51, 132, 0.15);
 
-  /* Readability */
-  --font-base: 19px;         /* Only slight total size increase */
-  --line-height: 1.9;        /* Much more space between lines */
-  --font-weight-p: 500;      /* Make text slightly bolder */
+  /* --- STRUCTURE --- */
+  --radius-md: 12px;
+  --radius-sm: 8px;
+  --section-spacing: 5rem;
+  --content-max-width: 1100px;
+  --navbar-height: 72px;
+
+  /* --- TYPOGRAPHY --- */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-base-size: 18px;
+  --line-height-relaxed: 1.6;
+
+  /* --- MOTION & PHYSICS --- */
+  /* Snappy entrance, slow settlement */
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Smooth, premium feel for hovers */
+  --ease-smooth: cubic-bezier(0.25, 0.8, 0.25, 1);
+  --duration-fast: 0.2s;
+  --duration-med: 0.4s;
 }
 
-/* 3. GLOBAL RESET & BASE STYLES */
-* {
+/* =========================================
+   2. COMFORT MODE OVERRIDES
+   (High Contrast, Reduced Motion, Hard Lines)
+   ========================================= */
+body.comfort-mode {
+  --bg-surface: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --text-primary: #000000;
+  --text-secondary: #222222;
+  
+  /* Higher Contrast Accents */
+  --accent-blue: #003366; 
+  --accent-yellow: #FFD700;
+  --border-subtle: #000000;
+
+  /* Redefine shadows as hard retro borders */
+  --shadow-sm: none;
+  --shadow-md: 4px 4px 0px #000000;
+  --shadow-hover-blue: 6px 6px 0px #000000;
+
+  /* Typography Readability */
+  --font-base-size: 20px;
+  --line-height-relaxed: 1.8;
+
+  /* Disable complex motion curves */
+  --ease-out-back: linear;
+  --ease-smooth: linear;
+}
+
+/* =========================================
+   3. GLOBAL RESET & BASE STYLES
+   ========================================= */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html { scroll-behavior: smooth; }
+
 body {
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: var(--font-base);
-  line-height: var(--line-height);
-  transition: all 0.3s ease;
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: var(--font-base-size);
+  line-height: var(--line-height-relaxed);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+  padding-bottom: 80px;
 }
 
-/* Specific text targeting for Comfort Mode */
-body.comfort-mode p {
-  font-size: 1.15rem; /* Make paragraphs clearly bigger */
-  letter-spacing: 0.02em; /* Spread letters out slightly */
-  font-weight: var(--font-weight-p);
+/* Typography Hierarchy */
+h1, h2, h3 {
+  color: var(--accent-blue);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
-body.comfort-mode h1, 
-body.comfort-mode h2, 
-body.comfort-mode h3 {
-  text-decoration: underline; /* Underline headers for structure */
-  text-decoration-thickness: 2px;
-  text-decoration-color: var(--accent-soft);
+h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeSlideDown var(--duration-med) var(--ease-out-back);
 }
 
-/* 4. COMPONENT STYLES */
+/* "Swedish Label" H2 style */
+h2 {
+  font-size: 1.5rem;
+  background-color: var(--accent-blue);
+  color: var(--accent-yellow);
+  padding: 0.5rem 1.25rem;
+  border-radius: var(--radius-sm);
+  display: inline-block;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+h2.special-title {
+  background-color: var(--accent-pink);
+  color: var(--bg-card);
+}
+
+h3 { font-size: 1.25rem; margin-bottom: 0.75rem; }
+
+p, li { max-width: 70ch; margin-bottom: 1.5rem; }
+
+/* =========================================
+   4. LAYOUT UTILITIES
+   ========================================= */
 .container {
-  max-width: 1100px;
+  max-width: var(--content-max-width);
   margin: 0 auto;
   padding: 0 24px;
 }
 
-.btn {
-  display: inline-block;
-  padding: 12px 24px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: all 0.2s ease;
+.section {
+  padding: var(--section-spacing) 0;
+  opacity: 0;
+  animation: fadeSlideUp 0.8s var(--ease-smooth) forwards;
 }
+.section:nth-child(2) { animation-delay: 0.2s; }
+.section:nth-child(3) { animation-delay: 0.4s; }
 
-/* Comfort Mode Button Fix */
-body.comfort-mode .btn {
-  border: 2px solid #000 !important; /* Force borders on buttons */
-  box-shadow: 4px 4px 0px #000; /* Retro "tactile" shadow */
-  transform: translate(-2px, -2px);
-}
-
-.btn-primary {
-  background-color: var(--accent-primary);
-  color: var(--white);
-}
-
-.btn-secondary {
-  background-color: var(--white);
-  color: var(--accent-primary);
-  border: 1px solid var(--accent-primary);
-}
-
-.card {
-  background: var(--white);
-  padding: 2rem;
-  border-radius: 12px;
-  
-  /* Dynamic Shadow/Border */
-  box-shadow: var(--shadow-soft);
-  border: var(--border-width) solid var(--border-color);
-}
-
-h1, h2, h3 { margin-bottom: 1rem; line-height: 1.2; }
-h1 { font-size: 2.5rem; }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.5rem; }
-
-/* 5. LAYOUT HELPERS */
-.section { padding: 5rem 0; }
-.section-grey { background-color: var(--accent-soft); } /* Uses variable now */
 .text-center { text-align: center; }
 
 .grid-3 {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 .grid-2 {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+/* =========================================
+   5. NAVBAR & NAVIGATION
+   ========================================= */
+.navbar {
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  height: auto;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 3rem;
 }
 
-@media (max-width: 768px) {
-  .grid-2 { grid-template-columns: 1fr; gap: 2rem; }
-  .section { padding: 3rem 0; }
+.logo-link {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent-blue);
+  text-decoration: none;
+  letter-spacing: -0.5px;
 }
 
-/* Timeline & Steps */
-.step-card { text-align: left; }
-.step-number {
-  font-size: 3rem;
-  color: var(--accent-primary);
-  opacity: 0.3;
-  font-weight: bold;
-  line-height: 1;
-  margin-bottom: 0.5rem;
+.nav-menu {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
-body.comfort-mode .step-number { opacity: 1; color: #000; } /* High contrast numbers */
+/* Animated Links */
+.nav-link {
+  text-decoration: none;
+  color: var(--text-primary);
+  font-weight: 600;
+  position: relative;
+  padding: 5px 0;
+  transition: color 0.2s ease;
+}
 
-/* Timeline fixes for Comfort Mode */
-.timeline { position: relative; max-width: 800px; margin: 0 auto; }
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--accent-yellow);
+  transition: width 0.3s var(--ease-smooth);
+}
+
+.nav-link:hover { color: var(--accent-blue); }
+.nav-link:hover::after { width: 100%; }
+
+/* Toggle Button */
+.toggle-btn {
+  background: transparent;
+  border: 2px solid var(--text-secondary);
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  display: flex; align-items: center; gap: 6px;
+}
+
+.toggle-btn:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  background: rgba(0, 91, 153, 0.05);
+}
+
+/* Mobile Hamburger */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+}
+.bar {
+  width: 25px; height: 3px; background-color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+/* Comfort Mode Navbar Override */
+body.comfort-mode .navbar {
+  border-bottom: 2px solid #000;
+  background: #fff;
+}
+body.comfort-mode .nav-link:hover::after { background-color: #000; }
+
+/* =========================================
+   6. COMPONENTS: BUTTONS & CARDS
+   ========================================= */
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all var(--duration-fast) var(--ease-smooth);
+  box-shadow: 0 4px 6px rgba(0, 50, 100, 0.1);
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 50, 100, 0.15);
+}
+
+.btn:active {
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: var(--accent-blue);
+  color: var(--bg-card);
+}
+.btn-primary:hover { background-color: var(--accent-blue-dark); }
+
+/* Comfort Mode Button */
+body.comfort-mode .btn {
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px #000;
+  transform: none !important;
+  transition: none;
+}
+body.comfort-mode .btn:active {
+  box-shadow: none;
+  transform: translate(4px, 4px) !important;
+}
+
+/* --- Cards --- */
+.card {
+  position: relative;
+  background: var(--bg-card);
+  padding: 1.75rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+  border-top: 4px solid var(--accent-blue);
+  transition: all var(--duration-med) var(--ease-smooth);
+  cursor: pointer;
+}
+
+.card h3 { color: var(--accent-blue); margin: 0; }
+.card p { margin: 0; color: var(--text-secondary); font-size: 1rem; }
+
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--shadow-hover-blue);
+  border-color: transparent;
+}
+
+.card:active {
+  transform: scale(0.97);
+  box-shadow: var(--shadow-sm);
+  background-color: #f8fbff;
+}
+
+/* Special Pink Card */
+.card.special {
+  border-top-color: var(--accent-pink);
+  background: linear-gradient(to bottom, var(--accent-pink-light) 0%, var(--bg-card) 40%);
+  border-color: #fadce9;
+}
+.card.special h3 { color: var(--accent-pink); }
+.card.special:hover { box-shadow: var(--shadow-hover-pink); }
+
+/* Comfort Mode Card */
+body.comfort-mode .card {
+  box-shadow: var(--shadow-md);
+  border: 2px solid #000;
+  border-top: 2px solid #000;
+  transform: none; background: #fff;
+}
+body.comfort-mode .card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #000;
+}
+body.comfort-mode .card:active {
+  transform: translate(2px, 2px); box-shadow: none;
+}
+
+/* =========================================
+   7. TIMELINE COMPONENT
+   ========================================= */
+.timeline { position: relative; max-width: 800px; margin: 3rem auto; }
 .timeline::before {
-  content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 4px;
-  background: var(--accent-soft); border-radius: 2px;
+  content: ''; position: absolute; left: 24px; top: 0; bottom: 0; width: 3px;
+  background: var(--border-subtle); border-radius: 2px;
 }
-body.comfort-mode .timeline::before { background: #000; } /* Black line */
 
-.timeline-item { position: relative; padding-left: 60px; margin-bottom: 2.5rem; }
+.timeline-item { 
+  position: relative; padding-left: 70px; margin-bottom: 3rem; 
+  opacity: 0;
+  animation: fadeSlideRight 0.6s var(--ease-out-back) forwards;
+  /* Add style="--item-index: X" in HTML to stagger these */
+  animation-delay: calc(var(--item-index, 0) * 0.2s); 
+}
+
 .timeline-item::before {
-  content: ''; position: absolute; left: 10px; top: 5px; width: 24px; height: 24px;
-  background: var(--accent-primary); border-radius: 50%; border: 4px solid var(--white);
-  box-shadow: 0 0 0 2px var(--accent-soft);
+  content: ''; position: absolute; left: 12px; top: 4px; 
+  width: 26px; height: 26px;
+  background: var(--accent-yellow);
+  border-radius: 50%; 
+  border: 4px solid var(--bg-card);
+  box-shadow: 0 0 0 2px var(--accent-blue);
+  z-index: 2;
+  animation: pulseDot 3s infinite ease-in-out;
 }
+
+/* Comfort Mode Timeline */
+body.comfort-mode .timeline::before { background: #000; width: 2px; }
 body.comfort-mode .timeline-item::before {
-  background: #000; border-color: #fff; box-shadow: 0 0 0 2px #000;
+  background: #000; border-color: #fff; box-shadow: 0 0 0 2px #000; animation: none;
 }
 
-.tile-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem; margin-top: 2rem;
+/* =========================================
+   8. ANIMATION KEYFRAMES
+   ========================================= */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-.tile {
-  background: white; padding: 1.5rem; border-radius: 8px; border: 1px solid #eee;
-  transition: transform 0.2s ease;
+@keyframes fadeSlideDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-/* Force border in comfort mode for tiles */
-body.comfort-mode .tile { border: 2px solid #000; }
+@keyframes fadeSlideRight {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulseDot {
+  0% { box-shadow: 0 0 0 2px var(--accent-blue); }
+  50% { box-shadow: 0 0 0 6px rgba(0, 91, 153, 0.2); }
+  100% { box-shadow: 0 0 0 2px var(--accent-blue); }
+}
 
-.tile:hover {
-  border-color: var(--accent-primary); transform: translateY(-2px);
+/* =========================================
+   9. MEDIA QUERIES (Mobile)
+   ========================================= */
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+  
+  .nav-menu {
+    position: fixed;
+    top: 68px; /* Height of navbar area */
+    left: -100%;
+    flex-direction: column;
+    background-color: var(--bg-card);
+    width: 100%;
+    text-align: center;
+    padding: 2rem 0;
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 10px 10px rgba(0,0,0,0.05);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .nav-menu.active { left: 0; }
+  
+  /* Hamburger Animation */
+  .hamburger.active .bar:nth-child(2) { opacity: 0; }
+  .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+  
+  /* Stack Grids */
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  
+  /* Timeline adjustments */
+  .timeline { margin-left: 0; }
+  .timeline::before { left: 20px; }
+  .timeline-item { padding-left: 50px; }
+  .timeline-item::before { left: 8px; }
+}
+
+/* =========================================
+   10. UTILITY CLASSES
+   ========================================= */
+
+/* For full-width white sections if needed */
+.bg-white {
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* For Lists with dividers (Values) */
+.list-bordered {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-bordered li {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.list-bordered li:last-child {
+  border-bottom: none;
+}
+
+.list-bordered strong {
+  color: var(--accent-blue);
+}
+
+/* Small uppercase text (for Job Titles) */
+.text-overline {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  display: block;
 }
