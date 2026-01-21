@@ -504,3 +504,26 @@ body.comfort-mode .timeline-item::before {
   margin-bottom: 1rem;
   display: block;
 }
+
+/* =========================================
+   11. APP LAYOUT & FOOTER (Add to bottom of index.css)
+   ========================================= */
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.footer {
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border-subtle);
+  padding: 2rem 0;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-top: 3rem;
+}
