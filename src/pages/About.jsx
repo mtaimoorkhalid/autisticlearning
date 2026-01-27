@@ -41,13 +41,13 @@ export default function About() {
           
           <div style={{ maxWidth: '600px', margin: '0 auto' }}>
             {/* The Special Pink Card */}
-            <div className="card special">
+            {/*<div className="card special">
               <h3>Zainab</h3>
               <span className="text-overline">Founder & Lead Support Coordinator</span>
               
               <p>Healthcare-trained professional with experience in patient care, ethics, and structured observation.</p>
               <p>Zainab focuses on caregiver collaboration and ethical documentation practices to support developmental growth.</p>
-            </div>
+            </div>*/}
           </div>
 
         </div>
